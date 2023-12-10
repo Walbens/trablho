@@ -10,6 +10,8 @@ class Tabuleiro {
             linhas.add(new ArrayList<>());
         }
     }
+
+
     public int getLinhaMenosCheia() {
         int linhaMenosCheia = 0;
         int menorTamanho = Integer.MAX_VALUE;
@@ -25,18 +27,18 @@ class Tabuleiro {
         return linhaMenosCheia;
     }
 
+
     public void adicionarCarta(int linha, Carta carta) {
         linhas.get(linha).add(carta);
     }
 
+
     public void imprimirTabuleiro() {
-        // Implementar lógica para imprimir o tabuleiro
         for (List<Carta> linha : linhas) {
             for (Carta carta : linha) {
-                
-                    System.out.print(carta.getNumero() + "\t");
-                
+                System.out.print(carta.getNumero() + "\t");
             }
+
             //preencher com zero se a linha não tiver 5 cartas
             for(int i=linha.size(); i<5;i++){
                 System.out.println("0\t");
@@ -46,6 +48,7 @@ class Tabuleiro {
         System.out.println();
     }
 
+
     public void coletarCartas(int linha) {
         // Coletar todas as cartas da linha especificada
         List<Carta> cartasColetadas = new ArrayList<>(linhas.get(linha));
@@ -53,7 +56,6 @@ class Tabuleiro {
 
         // Adicionar cartas coletadas à pontuação do jogador
         for (Carta carta : cartasColetadas) {
-            // Aplicar as regras de pontuação
             int pontos = 1;
             if (carta.getNumero() % 10 == 5) {
                 pontos++;
@@ -65,8 +67,6 @@ class Tabuleiro {
                 pontos += 4;
             }
 
-            // Adicionar pontos ao jogador
-            //jogadorAtual.adicionarPontos(pontos);
         }
     }
 

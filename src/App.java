@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in);
 
         System.out.print("Informe a quantidade de jogadores (entre 3 e 6): ");
-        int numJogadores = scanner.nextInt();
+        int numJogadores = scan.nextInt();
 
         if (numJogadores < 3 || numJogadores > 6) {
             System.out.println("Quantidade inválida de jogadores. O jogo suporta de 3 a 6 jogadores.");
@@ -17,7 +17,7 @@ public class App {
         List<Jogador> jogadores = new ArrayList<>();
         for (int i = 1; i <= numJogadores; i++) {
             System.out.print("Informe o nome do jogador " + i + ": ");
-            String nomeJogador = scanner.next();
+            String nomeJogador = scan.next();
             jogadores.add(new Jogador(nomeJogador));
         }
 
@@ -34,24 +34,46 @@ public class App {
 
         // Realizar 12 rodadas
         for (int rodada = 1; rodada <= 12; rodada++) {
-            System.out.println("Rodada " + rodada);
+            System.out.println("\n********************  Rodada " + rodada);
 
             // Distribuir 5 cartas abertas no início de cada linha do tabuleiro
             for (int linha = 0; linha < 5; linha++) {
                 for (int i = 0; i < 5; i++) {
                     Carta carta = baralho.retirarCarta();
                     tabuleiro.adicionarCarta(linha, carta);
+                    System.out.println("Carta adicionada à linha " + linha + ": " + carta.getNumero());
                 }
             }
 
             // Cada jogador escolhe uma carta e as cartas são reveladas
             for (Jogador jogador : jogadores) {
-                System.out.println("Cartas disponíveis para " + jogador.getNome() + ": " + jogador.getClass());
+                jogador.imprimirMao(); 
+            
                 System.out.print(jogador.getNome() + ", escolha o número da carta que deseja jogar: ");
-                int numeroCartaEscolhida = scanner.nextInt();
-                Carta cartaSelecionada = jogador.jogarCarta();
-                System.out.println(jogador.getNome() + " escolheu a carta " + cartaSelecionada.getNumero());
+                int numeroCartaEscolhida = scan.nextInt();
+
+
+                // Encontre a carta na mão do jogador com base no número escolhido
+                Carta cartaSelecionada = null;
+                for (Carta carta : jogador.getMao()) {
+                    if (carta.getNumero() == numeroCartaEscolhida) {
+                        cartaSelecionada = carta;
+                        break;
+                    }
+                }
+                
+                // Adicione a lógica para lidar com a escolha da carta
+                if (cartaSelecionada != null) {
+                    System.out.println(jogador.getNome() + " escolheu a carta " + cartaSelecionada.getNumero());
+                } else {
+                    System.out.println("Número de carta inválido. Tente novamente.");
+                }
+
+
+                jogador.jogarCarta();
+                
             }
+            
 
             // Ordenar os jogadores com base nas cartas selecionadas
             jogadores.sort((j1, j2) -> Integer.compare(j1.jogarCarta().getNumero(), j2.jogarCarta().getNumero()));
@@ -86,10 +108,10 @@ public class App {
         }
 
         // Imprimir pontuações, cartas coletadas e vencedor
-        // ...
         System.out.println("\nVencedor(es):");
         for (Jogador vencedor : vencedores) {
             System.out.println(vencedor.getNome());
         }
     }
+
 }

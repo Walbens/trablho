@@ -35,17 +35,42 @@ class Jogador {
     public int getPontuacao() {
         return pontuacao;
     }
+    public void imprimirMao() {
+        System.out.println("Mão de " + nome + ":" );
+        for (Carta carta : mao) {
+            System.out.print(carta.getNumero()+" ");
+        }
+        System.out.println("\n"); // Adiciona uma linha em branco para melhor legibilidade
+    }
+    public Carta jogarCarta() {
+        if (!mao.isEmpty()) {
+            Carta cartaJogada = mao.remove(0);
+            System.out.println(nome + " jogou a carta " + cartaJogada.getNumero());
+
+            // Adicione esta linha para imprimir a mão após a remoção
+            System.out.println("Mão de " + nome + " após jogar a carta:");
+            for (Carta carta : mao) {
+                System.out.print(carta.getNumero()+" ");   
+            }
+            System.out.println("\n");
+            return cartaJogada;
+        } else {
+            System.out.println("A mão do jogador " + nome + " está vazia. Não há carta para jogar.");
+            return null;
+        }
+    }
+
 
     public void adicionarPontos(int pontos) {
         pontuacao += pontos;
     }
 
     public Carta selecionarCarta() {
-        // Implementar lógica para o jogador escolher uma carta
-        return mao.get(0); // Exemplo: escolhe a primeira carta por enquanto
-    }
-
-    public Carta jogarCarta() {
-        return null;
-    }
+        if (!mao.isEmpty()) {
+            return mao.get(0);
+        } else {
+            System.out.println("A mão do jogador está vazia.");
+            return null; 
+        }
+    }    
 }
