@@ -38,11 +38,11 @@ public class App {
 
             // Distribuir 5 cartas abertas no início de cada linha do tabuleiro
             for (int linha = 0; linha < 5; linha++) {
-                for (int i = 0; i < 5; i++) {
+                
                     Carta carta = baralho.retirarCarta();
                     tabuleiro.adicionarCarta(linha, carta);
                     System.out.println("Carta adicionada à linha " + linha + ": " + carta.getNumero());
-                }
+                
             }
 
             // Cada jogador escolhe uma carta e as cartas são reveladas
@@ -90,7 +90,6 @@ public class App {
         }
 
         // Calcular pontos e declarar o vencedor
-        // ...
         int menorPontuacao = Integer.MAX_VALUE;
         List<Jogador> vencedores = new ArrayList<>();
 
